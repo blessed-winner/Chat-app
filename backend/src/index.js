@@ -3,6 +3,7 @@ import authRoutes from './routes/auth.route.js'
 import dotenv from 'dotenv'
 import { connectDB } from './lib/db.js'
 import cookieParser from 'cookie-parser'
+import messageRoutes from './routes/message.route.js'
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.get('/api/auth',authRoutes)
+app.get('/api/message',messageRoutes)
 
 
 app.listen(port,()=>{
