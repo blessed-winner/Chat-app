@@ -47,6 +47,8 @@ export const sendMessage = async (req,res) => {
          text,
          image:imageUrl
      })
+      
+     await newMessage.save()
 
      return res.status(201).json(newMessage)
    } catch (error) {
