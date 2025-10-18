@@ -15,7 +15,7 @@ export const useAuthStore = create((set)=>({
             const res = await axiosInstance.get("/auth/check")
             set({ authUser:res.data })
         } catch (error) {
-            console.log("Error in checkAuth")
+            console.log("Error in checkAuth",error)
             set({ authUser:null })
         } finally{
             set({ isCheckingAuth:false })
@@ -27,11 +27,47 @@ export const useAuthStore = create((set)=>({
         try {
             const res = await axiosInstance.post("/auth/signup",data)
             set({ authUser:res.data })
-            toast.success("User created successfully")
+            toast.success("Signup successful")
         } catch (error) {
-            toast.error(error.response.data.message)
+            toast.error(error.response?.data?.message || "Signup failed")
         } finally {
             set({ isSigningUp:false })
+        }
+     },
+
+     login: async (data) => {
+        set({ isLoggingIn:true })
+        try {
+            const res = await axiosInstance.post("/auth/login",data)
+            set({ authUser:res.data })
+            toast.success("Login successful")
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Login failed")
+        } finally {
+            set({ isLoggingIn:false })
+        }
+     },
+
+     logout: async () => {
+        try {
+            await axiosInstance.post("/auth/logout")
+            set({ authUser:null })
+            toast.success("Logged out successfully")
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Logout failed")
+        }
+     },
+
+     updateProfile: async (data) => {
+        set({ isUpdatingProfile:true })
+        try {
+            const res = await axiosInstance.put("/auth/update-profile",data)
+            set({ authUser:res.data })
+            toast.success("Profile updated successfully")
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Profile update failed")
+        } finally {
+            set({ isUpdatingProfile:false })
         }
      }
 })
