@@ -5,6 +5,7 @@ import ChatHeader from './ChatHeader'
 import MessageInput from './MessageInput'
 import MessageSkeleton from './skeletons/MessageSkeleton'
 import { useAuthStore } from '../store/useAuthStore'
+import { formatTimeMessage } from '../lib/utils'
 
 const ChatContainer = () => {
   const{isMessagesLoading,selectedUser,getMessages,messages} = useChatStore()
@@ -26,7 +27,7 @@ const ChatContainer = () => {
         <ChatHeader/>
         <div className='flex-1 overflow-auto p-4 space-y-4'>
            { messages.map((message)=>(
-            <div className={`chat ${message.senderId === authUser._id ? 'chat-start' : 'chat-end' }`}>
+            <div className={`chat ${message.senderId === authUser._id ? "chat-start" : "chat-end" }`}>
                <div className='chat-image avatar'>
                 <div className='size-10 rounded-full border'>
                   <img src={message.senderId === authUser._id ? authUser.profilePic || '/avatar.png' : selectedUser.profilePic || '/avatar.png'} alt="Profile pic" />
@@ -34,9 +35,9 @@ const ChatContainer = () => {
                 </div>
 
                  <div className='chat-header mb-1'>
-                  <time className='text-xs opacity-50 ml-1'>{message.createdAt}</time>
+                  <time className='text-xs opacity-50 ml-1'>{formatTimeMessage(message.createdAt)}</time>
                  </div>
-                 <div className='chat-bubble flex'>
+                 <div className='chat-bubble flex flex-col'>
                    {message.image && (
                     <img src={message.image} alt='Attachment' className='sm max-w-[200px] rounded-md mb-2'/>
                    )}

@@ -11,10 +11,11 @@ const MessageInput = () => {
     const handleImageChange = (e) => {
         const file = e.target.files[0]
         const reader = new FileReader()
-        reader.onload(()=>{
+        reader.readAsDataURL(file)
+        reader.onload = async ()=>{
             const base64image = reader.result
             setImagePreview(base64image)
-        })
+        }
     }
     
     const removeImage = () => {
