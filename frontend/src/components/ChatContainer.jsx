@@ -8,13 +8,17 @@ import { useAuthStore } from '../store/useAuthStore'
 import { formatTimeMessage } from '../lib/utils'
 
 const ChatContainer = () => {
-  const{isMessagesLoading,selectedUser,getMessages,messages} = useChatStore()
+  const{isMessagesLoading,selectedUser,getMessages,messages,subscribeToMessages,unSubscribeFromMessages} = useChatStore()
   const{authUser} = useAuthStore()
   
 
   useEffect(()=>{
      getMessages(selectedUser._id)
-  },[selectedUser._id,getMessages])
+
+     subscribeToMessages()
+
+     return () => unSubscribeFromMessages()
+  },[selectedUser._id,getMessages,subscribeToMessages,unSubscribeFromMessages])
   if(isMessagesLoading) return(
     <div className='flex-1 flex flex-col overflow-auto'>
         <ChatHeader/>
