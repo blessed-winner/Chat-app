@@ -14,24 +14,17 @@ dotenv.config()
 const port = process.env.PORT || 5001
 const __dirname = path.resolve()
 
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false, // optional for some browsers
-    crossOriginOpenerPolicy: false,
-  })
-);
 
-// CSP middleware
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      "default-src": ["'self'"],
-      "style-src": ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"],
-      "font-src": ["'self'", "https://fonts.gstatic.com"],
-      "img-src": ["'self'", "data:"],
-      "script-src": ["'self'", "'unsafe-inline'"], // allow inline scripts if necessary
-      "connect-src": ["'self'", "ws://localhost:5001", "http://localhost:5173"], // sockets / API
-    },
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      connectSrc: ["'self'", "ws://localhost:5001", "http://localhost:5173"]
+    }
   })
 );
 app.use(cors({
