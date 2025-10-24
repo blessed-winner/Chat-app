@@ -14,7 +14,7 @@ dotenv.config()
 const port = process.env.PORT || 5001
 const __dirname = path.resolve()
 
-
+app.use(helmet())
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
