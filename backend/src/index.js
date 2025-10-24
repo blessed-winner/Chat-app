@@ -7,11 +7,27 @@ import messageRoutes from './routes/message.route.js'
 import cors from 'cors'
 import { app,server,io } from './lib/socket.js'
 import path from 'path'
+import helmet from 'helmet';
 
 dotenv.config()
 
 const port = process.env.PORT || 5001
 const __dirname = path.resolve()
+
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "default-src": ["'self'"],
+        "style-src": ["'self'", "https://fonts.googleapis.com"],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "img-src": ["'self'", "data:"],
+        // optional: script-src, connect-src, etc.
+      },
+    },
+  })
+);
 
 app.use(cors({
     origin:'http://localhost:5173',
