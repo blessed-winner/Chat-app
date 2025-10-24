@@ -16,19 +16,24 @@ const __dirname = path.resolve()
 
 app.use(
   helmet({
-    contentSecurityPolicy: {
-      useDefaults: true,
-      directives: {
-        "default-src": ["'self'"],
-        "style-src": ["'self'", "https://fonts.googleapis.com"],
-        "font-src": ["'self'", "https://fonts.gstatic.com"],
-        "img-src": ["'self'", "data:"],
-        // optional: script-src, connect-src, etc.
-      },
-    },
+    crossOriginEmbedderPolicy: false, // optional for some browsers
+    crossOriginOpenerPolicy: false,
   })
 );
 
+// CSP middleware
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      "default-src": ["'self'"],
+      "style-src": ["'self'", "https://fonts.googleapis.com", "'unsafe-inline'"],
+      "font-src": ["'self'", "https://fonts.gstatic.com"],
+      "img-src": ["'self'", "data:"],
+      "script-src": ["'self'", "'unsafe-inline'"], // allow inline scripts if necessary
+      "connect-src": ["'self'", "ws://localhost:5001", "http://localhost:5173"], // sockets / API
+    },
+  })
+);
 app.use(cors({
     origin:'http://localhost:5173',
     credentials:true
