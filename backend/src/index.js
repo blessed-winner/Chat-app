@@ -14,6 +14,8 @@ dotenv.config()
 const port = process.env.PORT || 5001
 const __dirname = path.resolve()
 
+console.log("Serving frontend from:", path.join(__dirname, "../frontend/dist"));
+
 app.use(helmet())
 app.use(
   helmet.contentSecurityPolicy({
