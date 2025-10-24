@@ -14,21 +14,6 @@ dotenv.config()
 const port = process.env.PORT || 5001
 const __dirname = path.resolve()
 
-console.log("Serving frontend from:", path.join(__dirname, "../frontend/dist"));
-
-app.use(helmet())
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      imgSrc: ["'self'", "data:"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      connectSrc: ["'self'", "ws://localhost:5001", "http://localhost:5173"]
-    }
-  })
-);
 app.use(cors({
     origin:'http://localhost:5173',
     credentials:true
